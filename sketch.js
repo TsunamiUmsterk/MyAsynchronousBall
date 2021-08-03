@@ -1,5 +1,6 @@
 var ball;
 var database, ballPosition;
+var value1, value2;
 
 function setup(){
     createCanvas(1200, 900);
@@ -15,11 +16,18 @@ function setup(){
     ballPosition.on("value", readPosition, showError);
 
     backtoMid = createButton("Reset to Middle");
-    backtoMid.position(1100, 50);
+    backtoMid.position(ball.x + 400, ball.y + 400);
     backtoMid.style('font-size','20px');
     backtoMid.style('background-color','Cyan');
-    backtoMid.size(100,50);
+    backtoMid.size(200,50);
     backtoMid.mousePressed(pressButton);
+
+    var inp = createButton("Change Zoom to 1x and 2x");
+    inp.position(ball.x + 200, ball.y + 400);
+    inp.style('font-size','21px');
+    inp.style('background-color','green');
+    inp.size(200,50);
+    inp.mousePressed(updateZoom);
 
       }
       
@@ -38,12 +46,12 @@ function showError(error) {
 
 function draw(){
     background(230)
-    
+    camera.position = ball;
     if(keyDown(LEFT_ARROW)){
         changePosition(-3,0);
     }
     else if(keyDown(RIGHT_ARROW)){
-        changePosition(3,0);
+        changePosition(+3,0);
     }
     else if(keyDown(UP_ARROW)){
         changePosition(0,-3);
@@ -52,11 +60,11 @@ function draw(){
         changePosition(0,+3);
     }
 
-    
+
 
     fill("blue");
     textSize(45);
-    text("x:"+ ball.x + ", y: " + ball.y, 10, 50);
+    text("x:"+ ball.x + ", y: " + ball.y, ball.x - 585, ball.y - 400);
 
     fill("black")
     textSize(50);
@@ -64,16 +72,18 @@ function draw(){
 
     fill("orange")
     textSize(30);
-    text("Made by Umar Bashir, Age: 13", 790, 890);
+    text("Made by Umar Bashir, Age: 13", 790, 70);
 
 
     fill("red")
     textSize(30);
-    text("Press ↑ to move up", 10, 770);
-    text("Press ↓ to move down", 10, 800);
-    text("Press ← to move left", 10, 830);
-    text("Press → to move right", 10, 860);
-    text("Press the Button to go back to the middle", 10, 890);
+    text("Press ↑ to move up", 10, 80);
+    text("Press ↓ to move down", 10, 110);
+    text("Press ← to move left", 10, 140);
+    text("Press → to move right", 10, 170);
+    text("Press the Button to go back to the middle", 10, 200);
+    
+    
 
     drawSprites();
 }
@@ -94,4 +104,14 @@ function pressButton() {
             y : 450
        });
 }
+
+function updateZoom() {
+    if(camera.zoom === 1) {
+        camera.zoom = 2;
+    } else {
+        camera.zoom = 1;
+    }
+}
+
+ 
 
